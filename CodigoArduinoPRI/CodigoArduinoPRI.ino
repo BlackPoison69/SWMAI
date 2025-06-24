@@ -3,6 +3,9 @@ Gustavo Veronezi de Carvalho
 Julio Cesar Teiche Fraioli
 */
 
+// --- Bibliotecas ---
+#include <DS1302.h>
+
 // --- Valores de calibração ---
 const int Valor_Minimo_Chuva = 750;
 const int Valor_Maximo_Chuva = 0;
@@ -13,14 +16,24 @@ const int Valor_Maximo_Umidade_Solo = 0;
 const int buzzer = 12;
 const int Porta_Informacao_Analogica_Chuva = A0;
 const int Porta_Informacao_Analogica_Umidade_Solo = A1;
+DS1302 rtc(5, 6, 7);
 
 void setup() {
+
+  rtc.writeProtect(false);
+  rtc.halt(false);
+
   pinMode(buzzer, OUTPUT);
   Serial.begin(9600);
   Serial.println(">>> SWMAI - Sistema de Monitoramento Iniciado <<<");
 }
 
 void loop() {
+  // --- Ínicio do bloco do módulo de relógio (RTC) ---
+  String Hora_Atual = rtc.getTimeStr();
+  String Data_Atual = rtc.getDateStr();
+  // --- Fim do bloco do módulo de relógio (RTC) ---
+
 
   // --- Ínicio do bloco de sensor de Chuva ---
   float Soma_Informacao_Chuva = 0;
@@ -89,6 +102,11 @@ void loop() {
   // --- Início da amostragem de dados ---
   Serial.println("------------------------------------------");
   Serial.println("       PAINEL DE CONTROLE SWMAI");
+  Serial.print("       ");
+  Serial.print(Data_Atual);
+  Serial.print(" | ");
+  Serial.print(Hora_Atual);
+  Serial.println();
   Serial.println("------------------------------------------");
 
   Serial.print("  -> Chuva: ");
@@ -105,12 +123,13 @@ void loop() {
 
   Serial.println("------------------------------------------");
   Serial.println();
-
   // --- Fim da amostragem de dados ---
 
+  // --- Início do toque do buzzer ---
   digitalWrite(buzzer, HIGH);
-  delay(50);
+  delay(500);
   digitalWrite(buzzer, LOW);
+  // --- Fim do toque do buzzer ---
 
   delay(3000);
 }
