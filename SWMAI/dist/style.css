@@ -1,0 +1,32 @@
+/* Estiliza o contêiner da logo */
+.logo-container {
+  /* Define a largura e altura da div */
+  width: 100px;
+  height: 100px;
+
+  /* Arredonda as bordas para formar um círculo */
+  border-radius: 50%;
+
+  /* Para garantir que a imagem não saia dos limites, mesmo que seja maior */
+  overflow: hidden;
+
+  /* Posiciona a logo no canto superior esquerdo */
+  position: absolute; /* ou fixed, se quiser que ela role com a página */
+  top: 20px;
+  left: 20px;
+}
+
+/* Estiliza a imagem dentro do contêiner */
+.logo-container img {
+  /* Garante que a imagem preencha todo o espaço do contêiner */
+  width: 100%;
+  height: 100%;
+
+  /* Mantém a proporção da imagem e a corta para se encaixar */
+  object-fit: cover;
+}
+
+.titulo{
+    text-align: center;
+
+}
